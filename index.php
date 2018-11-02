@@ -47,7 +47,8 @@ $calculator = new Calculator("TI-82");
 $calculator->add(5);
 $calculator->subtract(10);
 var_dump($calculator);
-
+// Vi kan skapa två helt olika miniräknare som 
+// håller sitt egna tillstånd 'total'
 $second_calculator = new Calculator("TI-85");
 $second_calculator->add(10);
 var_dump($second_calculator);
