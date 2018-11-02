@@ -55,12 +55,20 @@ $second_calculator = new Calculator("TI-85");
 $second_calculator->add(10);
 var_dump($second_calculator);
 
+interface ICalculate{
+  public function calculate();
+}
 
-class TI82 extends Calculator
+
+class TI82 extends Calculator implements ICalculate
 {
   public function doGraph()
   {
 
+  }
+
+  public function calculate(){
+    echo "Hello";
   }
 }
 
