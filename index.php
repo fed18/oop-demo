@@ -9,15 +9,15 @@ class Calculator
 
   // Public property / publik egenskap
   // Använd public/private/protected
-  public $total = 0;
-  public $model = "";
+  protected $total = 0;
+  private $model = "";
   
   function __construct($model)
   {
     $this->model = $model;
   }
 
-	function add($number){
+	public function add($number){
     /**
      * $this används för att komma åt värden
      * inuti själva klassen
@@ -46,12 +46,26 @@ class Calculator
 $calculator = new Calculator("TI-82");
 $calculator->add(5);
 $calculator->subtract(10);
-var_dump($calculator);
+//echo $calculator->total;
+
+
 // Vi kan skapa två helt olika miniräknare som 
 // håller sitt egna tillstånd 'total'
 $second_calculator = new Calculator("TI-85");
 $second_calculator->add(10);
 var_dump($second_calculator);
+
+
+class TI82 extends Calculator
+{
+  public function doGraph()
+  {
+
+  }
+}
+
+$ti82 = new TI82("TI-82");
+$ti82->add(5);
 
 
 // Det är såhär jag använder klasser för det mesta
@@ -65,7 +79,7 @@ $pdo = new PDO(
 // och hämtar data via PDO
 class Cart
 {
-  public $pdo;
+  private $pdo;
   //! DEPENDENCY INJECTION
   function __construct($pdo)
   {
