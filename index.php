@@ -52,3 +52,43 @@ $second_calculator = new Calculator("TI-85");
 $second_calculator->add(10);
 var_dump($second_calculator);
 
+
+// Det är såhär jag använder klasser för det mesta
+$pdo = new PDO(
+  "mysql:host=localhost;dbname=fed18;charset=utf8",
+  "root",
+  "root"
+);
+
+// Skapa en klass som anropar databasen
+// och hämtar data via PDO
+class Cart
+{
+  public $pdo;
+  //! DEPENDENCY INJECTION
+  function __construct($pdo)
+  {
+    $this->pdo = $pdo;
+  }
+  // Varje gång du är inuti en funktion
+  // så måste ett värde retureras om du
+  // vill använda det i framtiden
+  function fetchAll()
+  {
+    $statement = $this->pdo->prepare("SELECT * FROM animals");
+    $statement->execute();
+    $all_products_in_cart = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $all_products_in_cart;
+  }
+
+  function add($product)
+  {
+    $statement = $this->pdo->prepare("INSERT INTO cart (title) VALUES (:title)");
+    $statement->execute([":title" => $product["title"]]);
+  }
+}
+
+$cart = new Cart($pdo);
+var_dump($cart->fetchAll());
+
+$cart->add(["title" => "New Product"]);
