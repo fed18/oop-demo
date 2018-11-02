@@ -75,12 +75,30 @@ class Cart
   // vill använda det i framtiden
   function fetchAll()
   {
-    $statement = $this->pdo->prepare("SELECT * FROM animals");
+    /**
+     * Istället för att kalla enbart på $pdo så måste vi kalla
+     * på $this->pdo för att komma åt databasuppkopplingen
+     * databasuppkopplingen blir injecerad när vi skapar vår cart
+     * $cart = new Cart($pdo);
+     */
+    $statement = $this->pdo->prepare("SELECT * FROM cart");
     $statement->execute();
     $all_products_in_cart = $statement->fetchAll(PDO::FETCH_ASSOC);
+    /**
+     * $all_products_in_cart är inte tillgängligt utanför
+     * denna funktion, för att kunna använda arrayen
+     * som vi får tillbaka från databasen måste vi returnera
+     * array från funktionen.
+     */
     return $all_products_in_cart;
   }
 
+  /**
+   * add() tar in en produkt som ett argument på samma sätt
+   * som när vi använder $_POST-variablen. Vi behöver inte
+   * returnera något från denna funktion då den enbart
+   * ska skicka in data i databasen
+   */
   function add($product)
   {
     $statement = $this->pdo->prepare("INSERT INTO cart (title) VALUES (:title)");
@@ -88,6 +106,11 @@ class Cart
   }
 }
 
+/**
+ * För att använda `fetchAll` samt `add` måste vi först
+ * skapa en cart. För att kunna använda $pdo måste vi skicka
+ * med $pdo variablen in som ett argument till new Cart()
+ */
 $cart = new Cart($pdo);
 var_dump($cart->fetchAll());
 
