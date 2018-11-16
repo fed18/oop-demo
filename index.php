@@ -75,10 +75,105 @@ class Car {
 pretty(Car::$numberOfWheels);
 Car::wroom();
 
-// Access regular property
-$new_car = new Car("red");
-$new_car2 = new Car("green");
-// pretty($new_car->color);
+// // Access regular property
+// $new_car = new Car("red");
+// $new_car2 = new Car("green");
+// // pretty($new_car->color);
 
-pretty($new_car->color);
-pretty($new_car2->color);
+// pretty($new_car->color);
+// pretty($new_car2->color);
+
+
+
+/**************************
+ *  Lönehanteringssystem  *
+ **************************/
+
+class Employee
+{
+  public $salary;
+
+  public function __construct($salary)
+  {
+    $this->salary = $salary;
+  }
+
+  public function work()
+  {
+    echo "Hard work work";
+  }
+}
+
+// A contract for every class that uses it
+interface FixStuff {
+  public function doComputing();
+}
+
+class ITGuy extends Employee implements FixStuff
+{
+  public $adminComputerRights;
+  
+  public function __construct($salary){
+      parent::__construct($salary);
+      $this->salary = $salary;
+      $this->adminComputerRights = true;
+  }
+
+  public function doComputing()
+  {
+    echo "Bleep bloop it's fixed";
+  }
+}
+
+class Android implements FixStuff
+{
+  public function doComputing()
+  {
+    echo "Wahoop";
+  }
+}
+
+
+$new_employee = new Employee(25000);
+$new_ITGuy = new ITGuy(10000);
+
+$new_ITGuy->work();
+$android = new Android();
+pretty($new_employee);
+pretty($android);
+
+
+interface CommonActions
+{
+  public function getAll();
+  public function create();
+}
+
+class Posts implements CommonActions
+{
+  public function getAll(){
+
+  }
+  public function create(){
+
+  }
+}
+
+define('SHOUT', 'HELLO!');
+
+class Comments implements CommonActions
+{
+  const SHOUT = "HELLO!";
+  private $pdo;
+  // Everytime we want to call the database
+  public function __construct($pdo){
+    $this->pdo = $pdo;
+  }
+
+  public function getAll(){}
+  public function create(){}
+}
+
+
+define('PI', 3.14);
+echo PI;
